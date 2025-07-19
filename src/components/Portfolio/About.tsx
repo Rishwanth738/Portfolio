@@ -43,8 +43,8 @@ const About = () => {
               Professional Summary
             </h3>
             <p className="text-text-secondary leading-relaxed text-lg">
-              Highly motivated and detail-oriented Full Stack Developer with strong foundational skills in data structures, 
-              algorithms, machine learning, and web development. Demonstrated proficiency in programming languages, 
+              Highly motivated and detail-oriented AI Engineer and Full Stack Developer with strong foundational skills in data structures, 
+              algorithms, machine learning, AI pipelines and web development. Demonstrated proficiency in programming languages, 
               software engineering principles, and building scalable solutions and scalable backend systems.
             </p>
             <p className="text-text-secondary leading-relaxed text-lg">
