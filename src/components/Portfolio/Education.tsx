@@ -7,15 +7,10 @@ const Education = () => {
     {
       institution: "Vellore Institute of Technology, Chennai",
       degree: "B.Tech Computer Science and Engineering",
-      cgpa: "9.61/10",
+      cgpa: "9.43/10",
       duration: "2023 - 2027",
       status: "Current",
-      color: "bg-primary/20 text-primary",
-      keyAchievements: [
-        "Dean's List 2023",
-        "Top 5% in Algorithms coursework",
-        "AI Club Core Member"
-      ]
+      color: "bg-primary/20 text-primary"
     },
     {
       institution: "Indian Institute of Technology Madras",
@@ -23,12 +18,7 @@ const Education = () => {
       cgpa: "3.02/4",
       duration: "2023 - 2028",
       status: "Current",
-      color: "bg-accent/20 text-accent",
-      keyAchievements: [
-        "Completed Data Science Foundations with Distinction",
-        "Hackathon Finalist 2024",
-        "Student Mentor"
-      ]
+      color: "bg-accent/20 text-accent"
     }
   ];
 
@@ -85,15 +75,6 @@ const Education = () => {
                           CGPA: {edu.cgpa}
                         </span>
                       </div>
-                    </div>
-                    {/* Key Achievements */}
-                    <div className="mt-4">
-                      <h4 className="font-semibold text-text-primary mb-2 text-base">Key Achievements</h4>
-                      <ul className="list-disc list-inside space-y-1 pl-2 text-sm text-text-secondary">
-                        {edu.keyAchievements.map((ach, i) => (
-                          <li key={i}>{ach}</li>
-                        ))}
-                      </ul>
                     </div>
                   </div>
                 </div>
