@@ -46,7 +46,7 @@ const Header = () => {
           <div className="flex justify-between items-center h-16">
             <div className="text-xl font-bold text-primary">Rishwanth J</div>
             
-            {/* Desktop Navigation */}
+            
             <div className="hidden md:flex space-x-8">
               {navItems.map((item) => (
                 <button
@@ -59,7 +59,7 @@ const Header = () => {
               ))}
             </div>
 
-            {/* Mobile menu button */}
+            
             <Button
               variant="ghost"
               size="icon"
@@ -71,7 +71,7 @@ const Header = () => {
           </div>
         </div>
 
-        {/* Mobile Navigation */}
+        
         {isMenuOpen && (
           <div className="md:hidden bg-card border-b border-border">
             <div className="px-2 pt-2 pb-3 space-y-1">
@@ -91,7 +91,7 @@ const Header = () => {
 
       {/* Hero Section */}
       <section id="hero" className="min-h-screen flex items-center justify-center bg-gradient-primary relative overflow-hidden">
-        {/* Particle Background */}
+        
         <div className="absolute inset-0 z-0">
           <Particles
             id="tsparticles"
@@ -193,7 +193,7 @@ const Header = () => {
             </div>
             {/* Profile Image Side (Right) */}
             <div className="flex-shrink-0 flex justify-center md:justify-end w-full md:w-auto mt-8 md:mt-0">
-              <div className="relative w-64 h-64 rounded-full overflow-hidden border-4 border-primary shadow-glow animate-glow-pulse">
+              <div className="relative w-80 h-80 rounded-full overflow-hidden border-4 border-primary shadow-glow animate-glow-pulse">
                 <img
                   src={profileImage}
                   alt="Rishwanth J"
