@@ -1,6 +1,7 @@
 import { Card, CardContent } from '@/components/ui/card';
 import { Badge } from '@/components/ui/badge';
 import { GraduationCap, Calendar, Award } from 'lucide-react';
+import { useRef, useEffect } from 'react';
 
 const Education = () => {
   const educationData = [
@@ -22,11 +23,33 @@ const Education = () => {
     }
   ];
 
+  const educationRef = useRef<HTMLDivElement>(null);
+  useEffect(() => {
+    if (educationRef.current) {
+      const loadAnime = async () => {
+        try {
+          const anime = (await import('animejs')).default;
+          anime({
+            targets: educationRef.current?.querySelectorAll('.education-animate'),
+            opacity: [0, 1],
+            translateY: [40, 0],
+            easing: 'easeOutExpo',
+            duration: 1000,
+            delay: anime.stagger(120)
+          });
+        } catch (error) {
+          console.warn('Animation failed to load:', error);
+        }
+      };
+      loadAnime();
+    }
+  }, []);
+
   return (
-    <section id="education" className="py-20 bg-card">
+    <section id="education" className="py-20 bg-card" ref={educationRef}>
       <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
-        <div className="text-center mb-16">
-          <h2 className="text-4xl md:text-5xl font-bold text-text-primary mb-6">
+        <div className="text-center mb-16 education-animate">
+          <h2 className="text-4xl md:text-5xl font-bold text-text-primary mb-6 section-web-frame">
             Education
           </h2>
           <div className="w-24 h-1 bg-gradient-accent mx-auto"></div>
@@ -39,7 +62,7 @@ const Education = () => {
           {educationData.map((edu, index) => (
             <Card 
               key={index}
-              className="bg-gradient-card border-border hover:shadow-glow transition-all duration-500 hover:scale-105 animate-fade-in"
+              className="bg-gradient-card border-border hover:shadow-glow transition-all duration-500 hover:scale-105 education-animate"
               style={{ animationDelay: `${index * 0.2}s` }}
             >
               <CardContent className="p-8">

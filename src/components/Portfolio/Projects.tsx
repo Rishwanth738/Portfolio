@@ -2,6 +2,7 @@ import { Card, CardContent, CardHeader, CardTitle } from '@/components/ui/card';
 import { Badge } from '@/components/ui/badge';
 import { Button } from '@/components/ui/button';
 import { ExternalLink, Github, Code, Database, Brain } from 'lucide-react';
+import { useRef, useEffect } from 'react';
 
 const Projects = () => {
   const projects = [
@@ -31,6 +32,28 @@ const Projects = () => {
     }
   ];
 
+  const projectsRef = useRef<HTMLDivElement>(null);
+  useEffect(() => {
+    if (projectsRef.current) {
+      const loadAnime = async () => {
+        try {
+          const anime = (await import('animejs')).default;
+          anime({
+            targets: projectsRef.current?.querySelectorAll('.projects-animate'),
+            opacity: [0, 1],
+            translateY: [40, 0],
+            easing: 'easeOutExpo',
+            duration: 1000,
+            delay: anime.stagger(120)
+          });
+        } catch (error) {
+          console.warn('Animation failed to load:', error);
+        }
+      };
+      loadAnime();
+    }
+  }, []);
+
   const getCategoryColor = (category: string) => {
     switch (category) {
       case "AI/ML":
@@ -38,22 +61,31 @@ const Projects = () => {
       case "Full Stack":
         return "bg-accent/20 text-accent";
       case "App Dev":
-        return "bg-secondary/40 text-secondary-foreground";
+        return "bg-accent/40 text-accent-foreground";
       default:
         return "bg-muted text-muted-foreground";
     }
   };
 
   return (
-    <section id="projects" className="py-20 bg-card">
-      <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
-        <div className="text-center mb-16">
-          <h2 className="text-4xl md:text-5xl font-bold text-text-primary mb-6">
-            Featured Projects
+    <section id="projects" className="py-20 bg-card relative overflow-hidden" ref={projectsRef}>
+      {/* Background Effects */}
+      <div className="absolute inset-0 bg-dynamic opacity-20"></div>
+      <div className="absolute top-20 left-10 w-24 h-24 border-2 border-primary/20 animate-float animate-morph"></div>
+      <div className="absolute bottom-10 right-10 w-20 h-20 bg-accent/10 rounded-full animate-float-reverse animate-glow-pulse"></div>
+      
+      <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 relative z-10">
+        <div className="text-center mb-16 projects-animate">
+          <h2 className="text-4xl md:text-5xl font-bold mb-6 text-gradient animate-gradient-shift text-focus section-web-frame">
+            <span className="text-shimmer">Featured Projects</span>
           </h2>
-          <div className="w-24 h-1 bg-gradient-accent mx-auto"></div>
-          <p className="text-text-secondary mt-4 text-lg max-w-2xl mx-auto">
-            Innovative solutions showcasing expertise in AI, full-stack development, and system design
+          <div className="w-24 h-1 bg-gradient-accent mx-auto animate-gradient-shift"></div>
+          <p className="text-text-secondary mt-4 text-lg max-w-2xl mx-auto text-slide-in">
+            <span className="text-glitch" data-text="Innovative solutions showcasing expertise">
+              Innovative solutions showcasing expertise
+            </span>
+            <br />
+            <span className="text-wave">in AI, full-stack development, and system design</span>
           </p>
         </div>
 
@@ -61,19 +93,19 @@ const Projects = () => {
           {projects.map((project, index) => (
             <Card 
               key={index}
-              className="bg-gradient-card border-border hover:shadow-glow transition-all duration-500 hover:scale-105 animate-fade-in group"
+              className="glass-premium hover-glow hover-lift parallax-element interactive-hover projects-animate group animate-slide-up"
               style={{ animationDelay: `${index * 0.2}s` }}
             >
               <CardHeader className="pb-4">
                 <div className="flex items-center justify-between mb-3">
-                  <div className="p-2 bg-primary/20 rounded-lg text-primary">
+                  <div className="p-3 bg-primary/20 rounded-xl text-primary group-hover:bg-primary/40 group-hover:scale-110 transition-all duration-300 animate-glow-pulse">
                     {project.icon}
                   </div>
-                  <Badge className={getCategoryColor(project.category)}>
+                  <Badge className={`${getCategoryColor(project.category)} animate-float`}>
                     {project.category}
                   </Badge>
                 </div>
-                <CardTitle className="text-xl text-text-primary group-hover:text-primary transition-colors">
+                <CardTitle className="text-xl text-text-primary group-hover:text-gradient transition-all duration-300">
                   {project.title}
                 </CardTitle>
               </CardHeader>
@@ -96,15 +128,13 @@ const Projects = () => {
                 </div>
                 
                 <div className="flex gap-3 pt-4">
-                  <Button 
-                    variant="outline" 
-                    size="sm" 
-                    className="border-primary/30 hover:bg-primary hover:text-primary-foreground flex-1"
+                  <button 
+                    className="btn-base btn-outline btn-sm flex-1"
                     onClick={() => window.open(project.githubLink, '_blank')}
                   >
                     <Github className="h-4 w-4 mr-2" />
                     Code
-                  </Button>
+                  </button>
                 </div>
               </CardContent>
             </Card>
@@ -112,14 +142,13 @@ const Projects = () => {
         </div>
 
         <div className="text-center mt-12">
-          <Button 
-            size="lg" 
-            className="bg-primary hover:bg-primary/90 text-primary-foreground shadow-glow"
+          <button 
+            className="btn-base btn-primary btn-xl"
             onClick={() => window.open('https://github.com/Rishwanth738', '_blank')}
           >
             <Github className="mr-2 h-5 w-5" />
             View All Projects on GitHub
-          </Button>
+          </button>
         </div>
       </div>
     </section>

@@ -6,6 +6,7 @@ import { Textarea } from '@/components/ui/textarea';
 import { Mail, Linkedin, MapPin, Phone, Send, Download } from 'lucide-react';
 import { useToast } from '@/hooks/use-toast';
 import emailjs from 'emailjs-com';
+import { useRef, useEffect } from 'react';
 
 const Contact = () => {
   const { toast } = useToast();
@@ -15,6 +16,24 @@ const Contact = () => {
     subject: '',
     message: ''
   });
+
+  const contactRef = useRef<HTMLDivElement>(null);
+  useEffect(() => {
+    if (contactRef.current) {
+      try {
+        anime({
+          targets: contactRef.current.querySelectorAll('.contact-animate'),
+          opacity: [0, 1],
+          translateY: [40, 0],
+          easing: 'easeOutExpo',
+          duration: 1000,
+          delay: anime.stagger(120)
+        });
+      } catch (error) {
+        console.warn('Animation failed to load:', error);
+      }
+    }
+  }, []);
 
   const handleSubmit = async (e: React.FormEvent) => {
     e.preventDefault();
@@ -95,10 +114,10 @@ const Contact = () => {
   ];
 
   return (
-    <section id="contact" className="py-20 bg-card">
+    <section id="contact" className="py-20 bg-card" ref={contactRef}>
       <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
-        <div className="text-center mb-16">
-          <h2 className="text-4xl md:text-5xl font-bold text-text-primary mb-6">
+        <div className="text-center mb-16 contact-animate">
+          <h2 className="text-4xl md:text-5xl font-bold text-text-primary mb-6 section-web-frame">
             Get In Touch
           </h2>
           <div className="w-24 h-1 bg-gradient-accent mx-auto"></div>
@@ -109,7 +128,7 @@ const Contact = () => {
 
         <div className="grid lg:grid-cols-2 gap-12">
           {/* Contact Information */}
-          <div className="space-y-8 animate-fade-in">
+          <div className="space-y-8 contact-animate">
             <div>
               <h3 className="text-2xl font-semibold text-text-primary mb-6">
                 Let's Connect
@@ -126,7 +145,7 @@ const Contact = () => {
               {contactInfo.map((info, index) => (
                 <Card 
                   key={index}
-                  className="bg-gradient-card border-border hover:shadow-glow transition-all duration-300 hover:scale-105"
+                  className="bg-gradient-card border-border hover:shadow-glow transition-all duration-300 hover:scale-105 contact-animate"
                 >
                   <CardContent className="p-6">
                     <div className="flex items-start gap-4">
@@ -183,7 +202,7 @@ const Contact = () => {
           </div>
 
           {/* Contact Form */}
-          <Card className="bg-gradient-card border-border shadow-glow animate-slide-in-left">
+          <Card className="bg-gradient-card border-border shadow-glow contact-animate">
             <CardContent className="p-8">
               <h3 className="text-2xl font-semibold text-text-primary mb-6">
                 Send a Message

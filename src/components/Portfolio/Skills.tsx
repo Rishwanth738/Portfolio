@@ -2,6 +2,7 @@ import { Card, CardContent } from '@/components/ui/card';
 import { Badge } from '@/components/ui/badge';
 import { Progress } from '@/components/ui/progress';
 import { Code, Database, Brain, Server, Globe, Award } from 'lucide-react';
+import { useRef, useEffect } from 'react';
 
 const Skills = () => {
   const skillCategories = [
@@ -88,20 +89,53 @@ const Skills = () => {
   const getSkillColor = (level: number) => {
     if (level >= 90) return "bg-primary";
     if (level >= 80) return "bg-accent";
-    if (level >= 70) return "bg-secondary";
+    if (level >= 70) return "bg-muted";
     return "bg-muted";
   };
 
+  const skillsRef = useRef<HTMLDivElement>(null);
+  useEffect(() => {
+    if (skillsRef.current) {
+      const loadAnime = async () => {
+        try {
+          const anime = (await import('animejs')).default;
+          anime({
+            targets: skillsRef.current?.querySelectorAll('.skills-animate'),
+            opacity: [0, 1],
+            translateY: [40, 0],
+            easing: 'easeOutExpo',
+            duration: 1000,
+            delay: anime.stagger(120)
+          });
+        } catch (error) {
+          console.warn('Animation failed to load:', error);
+        }
+      };
+      loadAnime();
+    }
+  }, []);
+
   return (
-    <section id="skills" className="py-20 bg-background">
-      <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
-        <div className="text-center mb-16">
-          <h2 className="text-4xl md:text-5xl font-bold text-text-primary mb-6">
-            Skills & Expertise
+    <section id="skills" className="py-20 bg-background relative overflow-hidden" ref={skillsRef}>
+      {/* Background Effects */}
+      <div className="absolute inset-0 bg-dynamic opacity-25"></div>
+      <div className="absolute top-16 right-16 w-28 h-28 border border-primary/20 animate-float-reverse animate-morph"></div>
+      <div className="absolute bottom-24 left-24 w-12 h-12 bg-accent/10 rounded-full animate-float animate-glow-pulse"></div>
+      
+      <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 relative z-10">
+        <div className="text-center mb-16 skills-animate">
+          <h2 className="text-4xl md:text-5xl font-bold mb-6 text-gradient animate-gradient-shift text-focus section-web-frame">
+            <span className="text-rainbow">Skills & Expertise</span>
           </h2>
-          <div className="w-24 h-1 bg-gradient-accent mx-auto"></div>
-          <p className="text-text-secondary mt-4 text-lg max-w-2xl mx-auto">
-            Comprehensive technical skills spanning full-stack development, AI/ML, and system design
+          <div className="w-24 h-1 bg-gradient-accent mx-auto animate-gradient-shift"></div>
+          <p className="text-text-secondary mt-4 text-lg max-w-2xl mx-auto text-reveal">
+            <span className="floating-letters">
+              {'Comprehensive technical skills spanning full-stack development, AI/ML, and system design'.split(' ').map((word, index) => (
+                <span key={index} className="text-wave mr-1" style={{ '--i': index } as React.CSSProperties}>
+                  {word}
+                </span>
+              ))}
+            </span>
           </p>
         </div>
 
@@ -110,7 +144,7 @@ const Skills = () => {
           {skillCategories.map((category, index) => (
             <Card 
               key={index}
-              className="bg-gradient-card border-border hover:shadow-glow transition-all duration-500 hover:scale-105 animate-fade-in"
+              className="glass-premium hover-glow hover-lift parallax-element interactive-hover skills-animate group animate-slide-up"
               style={{ animationDelay: `${index * 0.1}s` }}
             >
               <CardContent className="p-6">
@@ -148,7 +182,7 @@ const Skills = () => {
 
         {/* Certifications & Achievements */}
         <div>
-          <h3 className="text-2xl font-semibold text-text-primary mb-8 text-center flex items-center justify-center gap-3">
+          <h3 className="text-2xl font-semibold text-text-primary mb-8 text-center flex items-center justify-center gap-3 skills-animate">
             <Award className="h-6 w-6 text-primary" />
             Certifications & Achievements
           </h3>
@@ -157,7 +191,7 @@ const Skills = () => {
             {certifications.map((cert, index) => (
               <Card 
                 key={index}
-                className="bg-gradient-card border-border hover:shadow-glow transition-all duration-500 animate-slide-in-left"
+                className="bg-gradient-card border-border hover:shadow-glow transition-all duration-500 skills-animate"
                 style={{ animationDelay: `${index * 0.2}s` }}
               >
                 <CardContent className="p-6">

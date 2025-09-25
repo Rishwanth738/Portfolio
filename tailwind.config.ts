@@ -67,6 +67,7 @@ export default {
 				'light-blue': 'hsl(var(--light-blue))',
 				'text-primary': 'hsl(var(--text-primary))',
 				'text-secondary': 'hsl(var(--text-secondary))',
+				'text-accent': 'hsl(var(--text-accent))',
 			},
 			backgroundImage: {
 				'gradient-primary': 'var(--gradient-primary)',

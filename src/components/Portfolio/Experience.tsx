@@ -1,6 +1,7 @@
 import { Card, CardContent } from '@/components/ui/card';
 import { Badge } from '@/components/ui/badge';
 import { Briefcase, Calendar, MapPin, Users } from 'lucide-react';
+import { useRef, useEffect } from 'react';
 
 const Experience = () => {
   const workExperience = [
@@ -41,11 +42,33 @@ const Experience = () => {
     }
   ];
 
+  const experienceRef = useRef<HTMLDivElement>(null);
+  useEffect(() => {
+    if (experienceRef.current) {
+      const loadAnime = async () => {
+        try {
+          const anime = (await import('animejs')).default;
+          anime({
+            targets: experienceRef.current?.querySelectorAll('.experience-animate'),
+            opacity: [0, 1],
+            translateY: [40, 0],
+            easing: 'easeOutExpo',
+            duration: 1000,
+            delay: anime.stagger(120)
+          });
+        } catch (error) {
+          console.warn('Animation failed to load:', error);
+        }
+      };
+      loadAnime();
+    }
+  }, []);
+
   return (
-    <section id="experience" className="py-20 bg-background">
+    <section id="experience" className="py-20 bg-background" ref={experienceRef}>
       <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
-        <div className="text-center mb-16">
-          <h2 className="text-4xl md:text-5xl font-bold text-text-primary mb-6">
+        <div className="text-center mb-16 experience-animate">
+          <h2 className="text-4xl md:text-5xl font-bold text-text-primary mb-6 section-web-frame">
             Experience
           </h2>
           <div className="w-24 h-1 bg-gradient-accent mx-auto"></div>
@@ -55,7 +78,7 @@ const Experience = () => {
         </div>
 
         <div className="mb-16">
-          <h3 className="text-2xl font-semibold text-text-primary mb-8 flex items-center gap-3">
+          <h3 className="text-2xl font-semibold text-text-primary mb-8 flex items-center gap-3 experience-animate">
             <Briefcase className="h-6 w-6 text-primary" />
             Professional Experience
           </h3>
@@ -64,7 +87,7 @@ const Experience = () => {
             {workExperience.map((exp, index) => (
               <Card 
                 key={index}
-                className="bg-gradient-card border-border hover:shadow-glow transition-all duration-500 hover:scale-[1.02] animate-fade-in"
+                className="bg-gradient-card border-border hover:shadow-glow transition-all duration-500 hover:scale-[1.02] experience-animate"
                 style={{ animationDelay: `${index * 0.2}s` }}
               >
                 <CardContent className="p-8">
@@ -111,7 +134,7 @@ const Experience = () => {
 
         {/* Leadership Experience */}
         <div>
-          <h3 className="text-2xl font-semibold text-text-primary mb-8 flex items-center gap-3">
+          <h3 className="text-2xl font-semibold text-text-primary mb-8 flex items-center gap-3 experience-animate">
             <Users className="h-6 w-6 text-primary" />
             Leadership Experience
           </h3>
@@ -120,7 +143,8 @@ const Experience = () => {
             {leadershipExperience.map((exp, index) => (
               <Card 
                 key={index}
-                className="bg-gradient-card border-border hover:shadow-glow transition-all duration-500 hover:scale-[1.02] animate-slide-in-left"
+                className="bg-gradient-card border-border hover:shadow-glow transition-all duration-500 experience-animate"
+                style={{ animationDelay: `${index * 0.2}s` }}
               >
                 <CardContent className="p-8">
                   <div className="flex flex-col lg:flex-row lg:items-start gap-6">
